@@ -3,14 +3,10 @@
 <plist version="1.0">
 <dict>
 	<key>baseURL</key>
-	<string>https://api.weatherapi.com</string>
-	<key>versionApi</key>
-	<string>v1</string>
-	<key>isMock</key>
-	<false/>
-	<key>apiKey</key>
-	<string>b407607505f44abe97d73008241209</string>
-	<key>RouterApi</key>
-	<string>forecast.json</string>
+	<string>https://wttr.in/</string>
+	<key>format</key>
+	<string>j1</string>
+	<key>lang</key>
+	<string>es</string>
 </dict>
 </plist>

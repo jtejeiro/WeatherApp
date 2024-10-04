@@ -1,6 +1,6 @@
 //
 //  NetworkConstants.swift
-//  SearchHero
+//  WeatherApp
 //
 //  Created by Jaime Tejeiro on 12/6/24.
 //
@@ -38,32 +38,19 @@ final class NetworkConstants {
         return baseURL
     }
     
-    var versionApi: String {
-        guard let versionApi = plistNetworkConstants?["versionApi"] as? String else {
+    var formatApi: String {
+        guard let formatApi = plistNetworkConstants?["format"] as? String else {
             return ""
         }
-        return versionApi
+        return formatApi
     }
     
-    var apikey: String {
-        guard let apikey = plistNetworkConstants?["apiKey"] as? String else {
+    var langApi: String {
+        guard let langApi = plistNetworkConstants?["lang"] as? String else {
             return ""
         }
-        return apikey
+        return langApi
     }
-    
-
-    var routeApi: String {
-        guard let routeApi = plistNetworkConstants?["RouterApi"] as? String else {
-            return ""
-        }
-        return routeApi
-    }
-    
-    var baseURLApi: String {
-        return baseURL + "/" + versionApi + "/" + routeApi
-    }
-    
     
     
 }

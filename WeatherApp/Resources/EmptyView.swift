@@ -1,6 +1,6 @@
 //
 //  EmptyView.swift
-//  SearchHero
+//  WeatherApp
 //
 //  Created by Jaime Tejeiro on 14/6/24.
 //
@@ -12,9 +12,20 @@ struct EmptyView: View {
         ZStack(alignment: .center) {
             VStack {
                 Spacer()
-                Image(.logo)
-                    .resizable()
-                    .frame(height: 150)
+                HStack {
+                    Spacer()
+                    Image(systemName: "umbrella")
+                        .resizable()
+                        .frame(width:100,height: 120)
+                        .foregroundStyle(.gray)
+                    Spacer()
+                }
+                HStack {
+                    Text("El clima de hoy es...")
+                        .font(.title2)
+                        .bold()
+                        .foregroundStyle(.gray)
+                }
                 Spacer()
             }
         }

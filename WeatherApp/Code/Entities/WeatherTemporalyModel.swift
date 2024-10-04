@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+struct WeatherTemporalyModel:Identifiable {
+    var id: Int
+    var areaName: String
+    var country: String
+    var latLon:String
+    
+}

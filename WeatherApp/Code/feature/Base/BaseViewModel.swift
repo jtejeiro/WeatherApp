@@ -1,6 +1,6 @@
 //
 //  BaseViewModel.swift
-//  SearchHero
+//  WeatherApp
 //
 //  Created by Jaime Tejeiro on 1/7/24.
 //
@@ -24,7 +24,7 @@ class BaseViewModel {
     
     
     init() {
-        self.processState = .display
+        self.processState = .emptyDisplay
     }
     
     public func displayLoading(_ isLoading:Bool = false) {

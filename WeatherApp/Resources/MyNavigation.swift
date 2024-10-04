@@ -1,6 +1,6 @@
 //
 //  MyNavigation.swift
-//  TheHotel
+//  WeatherApp
 //
 //  Created by Jaime Tejeiro on 9/9/24.
 //

@@ -8,13 +8,13 @@
 import Foundation
 
 protocol WeatherInteractor {
-    func loadWeatherStatus(params:[String:String]) async throws -> WeatherModel
+    func loadWeatherStatus(queryparam:String,params:[String:String]) async throws -> WeatherModel
   
 }
 struct WeatherProvider: WeatherInteractor {
-    func loadWeatherStatus(params:[String:String]) async throws -> WeatherModel {
+    func loadWeatherStatus(queryparam:String,params:[String:String]) async throws -> WeatherModel {
         
-        let requestModel = RequestModel(endpoint: .empty,queryItems: params)
+        let requestModel = RequestModel(endpoint: .empty,queryItems: params, queryparam: queryparam)
         
         do{
             let model = try await ServiceLayer.callService(requestModel,WeatherModel.self)
@@ -29,7 +29,7 @@ struct WeatherProvider: WeatherInteractor {
 }
 struct WeatherMock: WeatherInteractor {
     
-    func loadWeatherStatus(params:[String:String]) async throws -> WeatherModel {
+    func loadWeatherStatus(queryparam:String,params:[String:String]) async throws -> WeatherModel {
         
         let bundleURL: URL = Bundle.main.url(forResource: "weathers", withExtension: "json")!
         let docURL: URL = URL.documentsDirectory.appending(path: "weathers.json")

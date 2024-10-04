@@ -1,6 +1,6 @@
 //
 //  ServiceLayer.swift
-//  SearchHero
+//  WeatherApp
 //
 //  Created by Jaime Tejeiro on 12/6/24.
 //

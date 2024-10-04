@@ -1,6 +1,6 @@
 //
 //  RequestModel.swift
-//  SearchHero
+//  WeatherApp
 //
 //  Created by Jaime Tejeiro on 12/6/24.
 //
@@ -15,8 +15,6 @@ struct RequestModel  {
     var httpMethod : HttpMethod = .GET
     var baseUrl : URLBase = .urlBase
     var queryparam : String?
-    private let Kapikey: String = "apikey"
-    private let apiKeyValue: String = NetworkConstants.shared.apikey
     
     
     func getURL() -> String{
@@ -38,7 +36,7 @@ struct RequestModel  {
     }
 
     enum Endpoints : String   {
-        case empty = ""
+        case empty = "%@"
     }
 
     enum URLBase {
@@ -47,7 +45,7 @@ struct RequestModel  {
         var rawValue: String {
             switch self {
             case .urlBase:
-                return NetworkConstants.shared.baseURLApi
+                return NetworkConstants.shared.baseURL
             }
         }
     }

@@ -8,22 +8,29 @@
 import SwiftUI
 
 struct WeatherBackgroundView: View {
-    var gradient = Gradient(colors: [Color.cyan,Color.blue,Color.purple,Color.blue,Color.black])
+    @Binding var typeWeather: WeatherType
     
     var body: some View {
        
         ZStack {
-            LinearGradient(gradient: gradient, startPoint: .topLeading, endPoint: .bottomTrailing)
+            LinearGradient(gradient: weatherBackgroundtype(type: typeWeather), startPoint: .topLeading, endPoint: .bottomTrailing)
                 .edgesIgnoringSafeArea(.vertical)
-                .overlay {
-                   
-                }
         }
 
-        
+    }
+    
+    func weatherBackgroundtype(type:WeatherType = .Sunny) -> Gradient {
+        switch type {
+        case .Sunny:
+            return Gradient(colors: [Color.cyan,Color.blue,Color.blue,Color.cyan])
+        case .Rain:
+            return Gradient(colors: [Color.gray,Color.cyan,Color.gray,Color.cyan,Color.gray])
+        case .Snow:
+            return Gradient(colors: [Color.white,Color.cyan,Color.cyan,Color.white])
+        }
     }
 }
 
 #Preview {
-    WeathetBackgroundView()
+    WeatherBackgroundView(typeWeather: .constant(.Sunny))
 }

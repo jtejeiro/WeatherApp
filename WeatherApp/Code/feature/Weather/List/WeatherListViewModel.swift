@@ -98,7 +98,7 @@ final class WeatherListViewModel:BaseViewModel {
             return .Sunny
         case "light rain", "partly cloudy" , "drizzle" :
             return .Rain
-        case "snow":
+        case "snow","heavy snow":
             return .Snow
         default:
             return .Sunny

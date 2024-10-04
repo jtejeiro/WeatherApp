@@ -85,7 +85,8 @@ struct WeatherSearchView: View {
         VStack {
             Spacer().frame(height: 5)
             HStack {
-                TextField("Busque la ciudad...", text: $text)
+                
+                TextField("Buscar una ciudad", text: $text)
                     .padding(7)
                     .padding(.horizontal, 25)
                     .background(Color.white)
@@ -94,7 +95,7 @@ struct WeatherSearchView: View {
                     .onTapGesture {
                         self.isEditing = true
                     }.keyboardType(.default)
-                    .submitLabel(.done) // Establece el botón como "Done"
+                    .submitLabel(.done)
                     .onSubmit {
                        fechedWeatherSearchData()
                     }
@@ -135,14 +136,34 @@ struct WeatherContainerListView: View {
     @State var isTypeCentigrados:Bool = false
     
     
+    fileprivate func refreshButtton() -> some View{
+        let areaName = viewModel.weatherSearchLogic.weatherModel.nearestArea.first?.areaName.first?.value ?? ""
+        
+        return Button {
+            fechedWeatherSearchData(areaName)
+        } label: {
+            VStack{
+                HStack {
+                    Image(systemName: "arrow.2.circlepath")
+                        .resizable()
+                        .foregroundStyle(.blue)
+                        .frame(width: 17,height: 15)
+                    Text("Recargar")
+                        .font(.system(size: 12))
+                        .foregroundStyle(.gray)
+                }
+            }
+        }
+    }
+    
     var body: some View {
         let currentCondition = viewModel.weatherSearchLogic.weatherModel.currentCondition.first
         let nearestArea = viewModel.weatherSearchLogic.weatherModel.nearestArea.first
         
         VStack(spacing: 8) {
             HStack {
-                Spacer()
-        
+                refreshButtton()
+                    .padding(.leading,10)
                 Spacer()
                 Button {
                     self.isTypeCentigrados.toggle()
@@ -229,21 +250,6 @@ struct WeatherContainerListView: View {
             WeatherOtherDayListView()
                 .environment(viewModel)
             Spacer()
-            
-            Button {
-               fechedWeatherSearchData(nearestArea?.areaName.first?.value ?? "")
-            } label: {
-                HStack {
-                    Spacer()
-                    Image(systemName: "arrow.2.circlepath")
-                        .resizable()
-                        .foregroundStyle(.blue)
-                        .frame(width: 20,height: 20)
-                    Text("Recargar")
-                    Spacer()
-                }
-            }
-            Spacer()
         }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
     }
     
@@ -254,6 +260,9 @@ struct WeatherContainerListView: View {
             }
         }
     }
+    
+    
+    
 }
 
 struct WeatherOtherDayListView: View {

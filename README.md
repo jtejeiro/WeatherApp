@@ -15,7 +15,7 @@ Application developed in IOS for a test. In MVVM SwiftUI architecture 🚀.
 
 ## Install
 
-* Descargue el proyecto.
+* Download the project.
   
 ## Author
 

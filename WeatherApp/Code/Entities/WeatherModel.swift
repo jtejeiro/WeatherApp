@@ -46,6 +46,33 @@ struct CurrentCondition: Codable {
         case winddir16Point, winddirDegree, windspeedKmph, windspeedMiles
     }
     
+    var test: CurrentCondition {
+        return CurrentCondition(
+            feelsLikeC: "16",
+            feelsLikeF: "60",
+            cloudcover: "0",
+            humidity: "53",
+            langEs: [LangE(value: "Soleado")],
+            localObsDateTime: "2024-10-02 10:20 AM",
+            observationTime: "02:20 PM",
+            precipInches: "0.0",
+            precipMM: "0.0",
+            pressure: "1019",
+            pressureInches: "30",
+            tempC: "16",
+            tempF: "60",
+            uvIndex: "4",
+            visibility: "16",
+            visibilityMiles: "9",
+            weatherCode: "113",
+            weatherDesc: [LangE(value: "Sunny")],
+            weatherIconURL: [LangE(value: "")],
+            winddir16Point: "N",
+            winddirDegree: "354",
+            windspeedKmph: "7",
+            windspeedMiles: "4"
+        )
+    }
 }
 
 // MARK: - LangE
@@ -63,11 +90,29 @@ struct NearestArea: Codable {
         case areaName, country, latitude, longitude, population, region
         case weatherURL = "weatherUrl"
     }
+    
+    var test: NearestArea {
+        return NearestArea(
+            areaName: [LangE(value: "Detroit")],
+            country: [LangE(value: "United States of America")],
+            latitude: "42.331",
+            longitude: "-83.046",
+            population: "884941",
+            region: [LangE(value: "Michigan")],
+            weatherURL: [LangE(value: "")]
+        )
+    }
 }
 
 // MARK: - Request
 struct Request: Codable {
     var query, type: String
+    
+    var test: Request {
+        return Request(
+            query: "Lat 42.35 and Lon -83.06",
+            type: "LatLon")
+    }
 }
 
 // MARK: - Weather
@@ -84,6 +129,7 @@ struct Weather: Codable {
         case totalSnowCM = "totalSnow_cm"
         case uvIndex
     }
+    
 }
 
 // MARK: - Astronomy
@@ -134,4 +180,52 @@ struct Hourly: Codable {
         case weatherIconURL = "weatherIconUrl"
         case winddir16Point, winddirDegree, windspeedKmph, windspeedMiles
     }
+    
+    static var test: Hourly {
+        return Hourly(
+            dewPointC: "7",
+            dewPointF: "44",
+            feelsLikeC: "17",
+            feelsLikeF: "63",
+            heatIndexC: "17",
+            heatIndexF: "63",
+            windChillC: "17",
+            windChillF: "63",
+            windGustKmph: "14",
+            windGustMiles: "9",
+            chanceoffog: "0",
+            chanceoffrost: "0",
+            chanceofhightemp: "0",
+            chanceofovercast: "0",
+            chanceofrain: "0",
+            chanceofremdry: "91",
+            chanceofsnow: "0",
+            chanceofsunshine: "86",
+            chanceofthunder: "0",
+            chanceofwindy: "0",
+            cloudcover: "17",
+            diffRAD: "0.0",
+            humidity: "50",
+            langEs: [LangE(value: "Despejado")],
+            precipInches: "0.0",
+            precipMM: "0.0",
+            pressure: "1014",
+            pressureInches: "30",
+            shortRAD: "0.0",
+            tempC: "17",
+            tempF: "63",
+            time: "0",
+            uvIndex: "1",
+            visibility: "10",
+            visibilityMiles: "6",
+            weatherCode: "113",
+            weatherDesc: [LangE(value: "Clear")],
+            weatherIconURL: [LangE(value: "")],
+            winddir16Point: "ENE",
+            winddirDegree: "75",
+            windspeedKmph: "9",
+            windspeedMiles: "6"
+        )
+    }
+
 }

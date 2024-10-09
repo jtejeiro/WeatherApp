@@ -8,8 +8,9 @@
 import Foundation
 
 struct CountryCityModel: Codable {
-    var country: String
-    var cities: [String]?
+    let country: String
+       let cities: [String]?
+       let states: [String: [String]]?
 }
 
 struct SearchCityModel: Identifiable {

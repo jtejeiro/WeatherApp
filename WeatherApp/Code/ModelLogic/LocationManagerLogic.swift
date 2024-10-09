@@ -20,7 +20,7 @@ final class LocationManagerLogic:NSObject,CLLocationManagerDelegate  {
     public var delegate: LocationManagerDelegate?
     public var isActiveLocation:Bool = false
     
-    var userLocation: CLLocation? = nil {
+    private(set) var userLocation: CLLocation? = nil {
         didSet {
             delegate?.userLocationdidUpdate(userLocationString: getUserLocationString() ?? "")
         }
@@ -40,11 +40,9 @@ final class LocationManagerLogic:NSObject,CLLocationManagerDelegate  {
     
     // Este método se llama cada vez que cambia la ubicación del usuario
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        debugPrint("location")
         self.isActiveLocation = true
         if let location = locations.last {
             DispatchQueue.main.async {
-                debugPrint("location last")
                 self.userLocation = location
             }
         }
@@ -60,15 +58,12 @@ final class LocationManagerLogic:NSObject,CLLocationManagerDelegate  {
     
     
     func getUserLocationString() -> String? {
-        debugPrint("userLocation")
         guard let userLocation = userLocation else {
             return ""
         }
-        debugPrint(userLocation)
         // Redondear a 2 decimales
         let latitude = String(format: "%.2f", userLocation.coordinate.latitude)
         let longitude = String(format: "%.2f", userLocation.coordinate.longitude)
-        debugPrint(latitude + "," + longitude)
         return latitude + "," + longitude
     }
 }

@@ -7,10 +7,14 @@
 
 import Foundation
 
-struct WeatherTemporalyModel:Identifiable {
-    var id: Int
+struct WeatherTemporalyModel:Codable,Identifiable {
+    var id:  UUID = UUID()
     var areaName: String
     var country: String
     var latLon:String
     
+    
+    var locationString:String {
+       return "\(areaName), \(country)"
+    }
 }

@@ -78,7 +78,8 @@ struct WeatherListView: View {
 struct WeatherSearchView: View {
     @Environment(WeatherListViewModel.self) var viewModel
     @State private var text: String = ""
-    @State private var isEditing = false
+    @State private var citiesText: String = ""
+    @State var isPopup: Bool = false
     
     
     var body: some View {
@@ -92,38 +93,33 @@ struct WeatherSearchView: View {
                     .background(Color.white)
                     .cornerRadius(8)
                     .padding(.horizontal, 10)
+                    .disabled(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
                     .onTapGesture {
-                        self.isEditing = true
-                    }.keyboardType(.default)
-                    .submitLabel(.done)
-                    .onSubmit {
-                       fechedWeatherSearchData()
+                        self.isPopup.toggle()
                     }
-                if isEditing {
-                    Button(action: {
-                        fechedWeatherSearchData()
-                    }) {
-                        Image(systemName: "magnifyingglass.circle.fill")
-                            .resizable()
-                            .frame(width: 30,height: 30)
-                            .foregroundStyle(.orange)
-                    }
-                    .padding(.trailing, 10)
-                    .transition(.move(edge: .trailing))
-                    .animation(.easeInOut(duration: 1.0), value: UUID())
-                }
+                   
             }
             Spacer().frame(height: 10)
         }
         .background(Color.white.opacity(0.8))
+        .fullScreenCover(isPresented: $isPopup) {
+            SearchCitiesView(searchText: $text, citiesText: $citiesText, isClose: $isPopup)
+        }.onChange(of: citiesText) { oldValue, newValue in
+            if newValue != "" {
+                fechedWeatherSearchData()
+            }
+        }
     }
     
     func fechedWeatherSearchData(){
         Task {
             do {
-               try await self.viewModel.fechWeatherSearchData(text: text)
+               try await self.viewModel.fechWeatherSearchData(text: citiesText)
                 self.text = ""
-                self.isEditing = false
+                self.citiesText = ""
+            } catch {
+                self.text = ""
+                self.citiesText = ""
             }
         }
     }
@@ -138,9 +134,12 @@ struct WeatherContainerListView: View {
     
     fileprivate func refreshButtton() -> some View{
         let areaName = viewModel.weatherSearchLogic.weatherModel.nearestArea.first?.areaName.first?.value ?? ""
+        let country = viewModel.weatherSearchLogic.weatherModel.nearestArea.first?.country.first?.value ?? ""
+        
+        let areaCountry = areaName + ", " + country
         
         return Button {
-            fechedWeatherSearchData(areaName)
+            fechedWeatherSearchData(areaCountry)
         } label: {
             VStack{
                 HStack {
@@ -320,11 +319,6 @@ struct WeatherButtonLocationView: View {
                 .foregroundColor(.white.opacity(0.6))
         }
         .padding(.horizontal,30)
-        .onAppear {
-            Task {
-               await viewModel.configViewModel()
-            }
-        }
     }
     
     func fechedWeatherLocationUser(){
@@ -340,7 +334,7 @@ struct WeathertemporalyListView: View {
     @Environment(WeatherListViewModel.self) var viewModel
     
     var body: some View {
-        let weatherTempList = viewModel.weatherSearchLogic.weatherTempList
+        let weatherTempList = viewModel.weatherTemporalyLogic.weatherTempList
         if  weatherTempList.count != 0 {
             VStack {
                 HStack {
@@ -348,11 +342,24 @@ struct WeathertemporalyListView: View {
                         .font(.callout)
                         .foregroundStyle(.gray)
                     Spacer()
+                    Button {
+                        Task {
+                            do {
+                               await  viewModel.weatherTemporalyLogic.removeWeatherTemporaly()
+                            }
+                        }
+                    } label: {
+                        Image(systemName: "trash.circle.fill")
+                            .resizable()
+                            .frame(width: 15, height: 15)
+                            .foregroundStyle(.gray)
+                    }
+
                 }
-                VStack(spacing: 10) {
+                LazyVStack(spacing: 10) {
                     ForEach(weatherTempList.reversed()) { model in
                         Button {
-                            fechedWeatherSearchData(model.areaName)
+                            fechedWeatherSearchData(model.locationString)
                         } label: {
                             HStack(spacing: 20) {
                                 Spacer()
